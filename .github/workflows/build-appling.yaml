@@ -225,14 +225,22 @@ jobs:
           npm install --global create-dmg
 
           APP_PATH="${{ steps.find_file.outputs.APP_PATH }}"
-          DMG_NAME="PearPass-Desktop-MacOS-${{ matrix.arch }}-v${{ needs.version.outputs.version }}.dmg"
+          VERSION="${{ needs.version.outputs.version }}"
+          ARCH="${{ matrix.arch }}"
 
-          # create-dmg syntax: create-dmg [options] <dmg path> <source app>
-          create-dmg "$DMG_NAME" "$APP_PATH" --identity=959D2C8BB8323AEF9C2367ACA2F854AE4D7DE458 --no-version-in-filename
+          create-dmg --identity=959D2C8BB8323AEF9C2367ACA2F854AE4D7DE458 --no-version-in-filename "$APP_PATH"
+
+          # Find the DMG that was just created in the current working directory (./appling)
+          RAW_DMG=$(ls ./*.dmg | head -n 1)
+          echo "Raw DMG from create-dmg: $RAW_DMG"
+
+          DMG_NAME="PearPass-Desktop-MacOS-${ARCH}-v${VERSION}.dmg"
+          mv "$RAW_DMG" "$DMG_NAME"
 
           DMG_PATH="$PWD/$DMG_NAME"
-          echo "Created DMG at: $DMG_PATH"
+          echo "Renamed DMG to: $DMG_PATH"
           echo "DMG_PATH=$DMG_PATH" >> "$GITHUB_OUTPUT"
+
 
       - name: Notarize DMG
         if: ${{ steps.create_dmg.outputs.DMG_PATH != '' }}
