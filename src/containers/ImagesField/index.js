@@ -18,7 +18,13 @@ import { useModal } from '../../context/ModalContext'
 import { DeleteIcon, ImageIcon, PlusIcon } from '../../lib-react-components'
 import { DisplayPictureModalContent } from '../Modal/DisplayPictureModalContent'
 
-export const ImagesField = ({ title, pictures = [], onAdd, onRemove }) => {
+export const ImagesField = ({
+  title,
+  pictures = [],
+  onAdd,
+  onRemove,
+  testId
+}) => {
   const { setModal } = useModal()
 
   const pictureUrls = useMemo(
@@ -47,7 +53,7 @@ export const ImagesField = ({ title, pictures = [], onAdd, onRemove }) => {
   }
 
   return html`
-    <${Container}>
+    <${Container} data-testid=${testId}>
       <${Header}>
         <${ImageIcon} />
         <${Title}>${title}<//>
@@ -71,7 +77,10 @@ export const ImagesField = ({ title, pictures = [], onAdd, onRemove }) => {
           `
         )}
         ${!!onAdd &&
-        html` <${AddContainer} onClick=${onAdd}>
+        html` <${AddContainer}
+          data-testid=${testId ? `${testId}-add` : undefined}
+          onClick=${onAdd}
+        >
           <${PlusIcon} color=${colors.primary400.mode1} />
         <//>`}
       <//>
