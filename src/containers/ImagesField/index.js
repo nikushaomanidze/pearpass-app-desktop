@@ -18,6 +18,15 @@ import { useModal } from '../../context/ModalContext'
 import { DeleteIcon, ImageIcon, PlusIcon } from '../../lib-react-components'
 import { DisplayPictureModalContent } from '../Modal/DisplayPictureModalContent'
 
+/**
+ * @param {{
+ *  title: string
+ *  pictures: { buffer: ArrayBuffer, name: string }[]
+ *  onAdd?: () => void
+ *  onRemove?: (index: number) => void
+ *  testId?: string
+ * }} props
+ */
 export const ImagesField = ({
   title,
   pictures = [],
