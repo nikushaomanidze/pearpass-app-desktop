@@ -12,8 +12,8 @@ export const AppearanceContent = () => {
   const [language, setLanguage] = useState(i18n.locale)
   const { languageOptions } = useLanguageOptions()
 
-  const handleLanguageChange = (selected) => {
-    setLanguage(selected.value)
+  const handleLanguageChange = async (selected) => {
+    await setLanguage(() => selected.value)
     i18n.activate(selected.value)
   }
 
