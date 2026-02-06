@@ -111,7 +111,7 @@ export const MainView = () => {
           ? html` <${EmptyCollectionView}
               selectedFolder=${selectedFolder}
               isFavoritesView=${isFavoritesView}
-              isSearchActive=${Boolean(searchValue)}
+              isSearchActive=${!!searchValue}
             />`
           : html` <${ContentWrapper}>
               <${RecordListView}
